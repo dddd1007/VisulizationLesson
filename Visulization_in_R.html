@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visualization in R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Xiaokai Xia" />
+    <link href="libs/remark-css-0.0.1/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Visualization in R
+## How to know your data clearly
+### Xiaokai Xia
+### 2017/4/20
+
+---
+
+
+## Prologue
+You can find this slide at https://github.com/dddd1007/VisulizationLesson
+
+
+
+
+And you should finish this lesson with those packages as follow:
+- tidyverse
+- vioplot
+- yarrr
+- superheat
+- corrgram
+- factoextra
+
+---
+## Why we should visual our data?
+
+```r
+data(anscombe)
+```
+&lt;table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' &gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style='border-top: 2px solid grey;'&gt;&lt;/th&gt;
+&lt;th colspan='2' style='font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Data 1&lt;/th&gt;&lt;th style='border-top: 2px solid grey;; border-bottom: hidden;'&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan='2' style='font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Data 2&lt;/th&gt;&lt;th style='border-top: 2px solid grey;; border-bottom: hidden;'&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan='2' style='font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Data 3&lt;/th&gt;&lt;th style='border-top: 2px solid grey;; border-bottom: hidden;'&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th colspan='2' style='font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'&gt;Data 4&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th style='border-bottom: 1px solid grey;'&gt; &lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;x-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;y-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey;' colspan='1'&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;x-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;y-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey;' colspan='1'&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;x-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;y-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey;' colspan='1'&gt;&amp;nbsp;&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;x-value&lt;/th&gt;
+&lt;th style='border-bottom: 1px solid grey; text-align: center;'&gt;y-value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;1&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;10&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.04&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;10&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9.14&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;10&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.46&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6.58&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;2&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6.95&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.14&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6.77&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;5.76&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;3&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;13&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.58&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;13&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.74&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;13&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;12.74&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.71&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;4&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.81&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.77&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.11&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.84&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;5&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;11&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.33&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;11&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9.26&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;11&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.81&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.47&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;6&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;14&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9.96&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;14&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.1&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;14&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.84&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.04&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;7&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.24&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6.13&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6.08&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;5.25&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;4&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;4.26&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;4&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;3.1&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;4&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;5.39&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;19&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;12.5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;9&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;12&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;10.84&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;12&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;9.13&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;12&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8.15&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;5.56&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='text-align: left;'&gt;10&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;4.82&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.26&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;6.42&lt;/td&gt;
+&lt;td style='' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='text-align: center;'&gt;7.91&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: left;'&gt;11&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;5&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;5.68&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey;' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;5&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;4.74&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey;' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;5&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;5.73&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey;' colspan='1'&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;8&lt;/td&gt;
+&lt;td style='border-bottom: 2px solid grey; text-align: center;'&gt;6.89&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+## Try to do a statistical analysis
+### Like ... Correlation?
+
+```r
+cor(anscombe$x1, anscombe$y1)
+```
+
+```
+## [1] 0.8164205
+```
+
+```r
+cor(anscombe$x2, anscombe$y2)
+```
+
+```
+## [1] 0.8162365
+```
+
+```r
+cor(anscombe$x3, anscombe$y3)
+```
+
+```
+## [1] 0.8162867
+```
+
+```r
+cor(anscombe$x4, anscombe$y4)
+```
+
+```
+## [1] 0.8165214
+```
+
+---
+### Or a Linear Model?
+
+```r
+ff &lt;- y ~ x
+mods &lt;- setNames(as.list(1:4), paste0("lm", 1:4))
+for(i in 1:4) {
+  ff[2:3] &lt;- lapply(paste0(c("y","x"), i), as.name)
+  mods[[i]] &lt;- lmi &lt;- lm(ff, data = anscombe)
+}
+sapply(mods, coef)
+```
+
+```
+##                   lm1      lm2       lm3       lm4
+## (Intercept) 3.0000909 3.000909 3.0024545 3.0017273
+## x1          0.5000909 0.500000 0.4997273 0.4999091
+```
+
+---
+### But if we do a visualization firstly?
+.center[
+![](Visulization_in_R_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+---
+## Basic Plot
+- Histogram
+- Bar Plot
+- Boxplot
+- Pie Chart
+
+--
+
+```r
+head(iris)
+```
+
+```
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+```
+
+---
+### Histogram
+
+```r
+hist(iris$Sepal.Length)
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+### Bar Plot
+
+```r
+barplot(table(iris$Species))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+---
+#### Tip
+**Notice the different between histogram and bar charts.**
+
+---
+### boxplot
+
+```r
+boxplot(Sepal.Length ~ Species, data = iris)
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+
+---
+### Pie Chart
+
+```r
+pie(c(1,1,1),levels(iris$Species))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+## Should I need to know some other charts?
+.center[![another-exp](another.png)]
+
+---
+## Some charts using raw data
+- Scatter Plot
+- Violin Plot
+- Pirate Plot
+
+---
+### Scatter Plot
+
+```r
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+### Violin Plot
+![](Visulization_in_R_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+---
+### Pirate Plot
+
+```r
+yarrr::pirateplot(Sepal.Length ~ Species, data = iris)
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+### Pirate Plot
+.center[![custompirate](custompirate.jpg)]
+
+---
+## May you find some cool figure of papers sometimes.
+Like this...
+--
+.center[![myphoto](me.jpg)]
+
+---
+Like this...
+![](Visulization_in_R_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+---
+this...
+![](Visulization_in_R_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+this...
+![](Visulization_in_R_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+---
+this...
+![](Visulization_in_R_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+### And you can plot them by searching on the Internet.
+
+**相关图**
+
+corrgram::corrgram(iris[-5], upper.panel = NULL)
+
+**热力图**
+
+superheat(X = iris[,-c(1, 5)],
+                yr = iris[,1],
+                yr.axis.name = "Sepal.Length",
+                membership.rows = iris$Species)
+                
+**聚类图**
+
+data("USArrests")
+df &lt;- scale(USArrests)
+km.res &lt;- kmeans(scale(USArrests), 4, nstart = 25)
+factoextra::fviz_cluster(km.res, data = df,ggtheme = theme_minimal())
+
+---
+background-image: url(hadly.jpg)
+
+---
+## ggplot2
+--
+
+### The Grammar of Graphics
+.center[![ggplot2](ggplot2.png)]
+
+---
+## Three Basic elements
+
+- Layer
+- Aesthetics
+- Geometric
+
+---
+## Scatter Plot
+
+```r
+ggplot(iris) + geom_point(aes(x = Sepal.Length, y = Sepal.Width))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+---
+## Scatter Plot
+
+```r
+ggplot(iris) + 
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, colour = Species))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+---
+## Scatter Plot
+
+```r
+ggplot(iris) + 
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+  stat_smooth(aes(x = Sepal.Length, y = Sepal.Width))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+---
+## Scatter Plot
+
+```r
+ggplot(iris) + 
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+  stat_smooth(aes(x = Sepal.Length, y = Sepal.Width)) +
+  facet_grid(Species ~ .)
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+---
+## Boxplot
+--
+
+Sepal.Length ~ Species
+
+```r
+ggplot(iris) + geom_boxplot(aes(x = Species, y = Sepal.Length))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+---
+## Boxplot
+Change color
+--
+
+```r
+ggplot(iris) + 
+  geom_boxplot(aes(x = Species, y = Sepal.Length, fill = Species))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+
+---
+## Boxplot
+Change theme
+--
+
+```r
+ggplot(iris) + 
+  geom_boxplot(aes(x = Species, y = Sepal.Length, fill = Species)) + 
+  ggthemes::theme_economist()
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+
+---
+## Boxplot
+Change color scale
+--
+
+```r
+ggplot(iris) + 
+  geom_boxplot(aes(x = Species, y = Sepal.Length, fill = Species)) + 
+  ggthemes::theme_economist() +
+  scale_fill_brewer()
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+
+---
+## qqplot
+--
+
+```r
+ggplot(iris) + 
+  geom_qq(aes(sample = Sepal.Length))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+
+---
+## Histogram
+--
+
+```r
+ggplot(iris) +
+  geom_histogram(aes(x = Sepal.Length))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+
+---
+## Barplot
+--
+
+```r
+ggplot(iris) +
+  geom_bar(aes(x = Species))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+
+---
+## Barplot
+--
+Change color by group
+
+```r
+ggplot(iris) +
+  geom_bar(aes(x = Species, fill = Species))
+```
+
+![](Visulization_in_R_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+
+---
+## So why we should use ggplot2?
+- The understandable logic of the grammar.
+- The automatic statistical calculation.
+- Automatic legends, colors, etc.
+- Nice output.
+- Easy to extend.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('showSlide', function (slide) {setTimeout(function() {window.dispatchEvent(new Event('resize'));}, 100)});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
